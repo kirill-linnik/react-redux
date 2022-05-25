@@ -1,9 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
+import { combineReducers } from "redux";
 import logger from "redux-logger";
 import userReducer from "./reducers/userReducer";
 
 const LOCAL_STORAGE_LOCATION = "demo-store";
+
+const rootReducer = combineReducers({
+  user: userReducer,
+});
 
 const loadFromLocalStorage = (): RootState | undefined => {
   try {
@@ -15,12 +20,8 @@ const loadFromLocalStorage = (): RootState | undefined => {
   }
 };
 
-const preloadedState = loadFromLocalStorage();
-
 const store = configureStore({
-  reducer: {
-    user: userReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
     let middleware = getDefaultMiddleware();
 
@@ -30,7 +31,7 @@ const store = configureStore({
 
     return middleware;
   },
-  preloadedState,
+  preloadedState: loadFromLocalStorage(),
 });
 
 const stateObjectsToPersist: Array<keyof RootState> = ["user"];
@@ -58,7 +59,7 @@ store.subscribe(() => {
   saveToLocalStorage(store.getState());
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof rootReducer>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
