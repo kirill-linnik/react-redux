@@ -1,13 +1,36 @@
+import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { applyMiddleware, combineReducers, createStore } from "redux";
 import logger from "redux-logger";
-import thunk from "redux-thunk";
 import userReducer from "./reducers/userReducer";
 
 const LOCAL_STORAGE_LOCATION = "demo-store";
 
-const rootReducer = combineReducers({
-  user: userReducer,
+const loadFromLocalStorage = (): RootState | undefined => {
+  try {
+    const stateStr = localStorage.getItem(LOCAL_STORAGE_LOCATION);
+    return stateStr ? JSON.parse(stateStr) : undefined;
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+};
+
+const preloadedState = loadFromLocalStorage();
+
+const store = configureStore({
+  reducer: {
+    user: userReducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    let middleware = getDefaultMiddleware();
+
+    if (process.env.NODE_ENV !== "production") {
+      return middleware.concat(logger);
+    }
+
+    return middleware;
+  },
+  preloadedState,
 });
 
 const stateObjectsToPersist: Array<keyof RootState> = ["user"];
@@ -31,34 +54,11 @@ const saveToLocalStorage = (state: RootState) => {
   }
 };
 
-const loadFromLocalStorage = (): RootState | undefined => {
-  try {
-    const stateStr = localStorage.getItem(LOCAL_STORAGE_LOCATION);
-    return stateStr ? JSON.parse(stateStr) : undefined;
-  } catch (e) {
-    console.log(e);
-    return undefined;
-  }
-};
-
-const persistedStore = loadFromLocalStorage();
-
-let middleware: Array<any> = [thunk];
-if (process.env.NODE_ENV !== "production") {
-  middleware = [...middleware, logger];
-}
-
-const store = createStore(
-  rootReducer,
-  persistedStore,
-  applyMiddleware(...middleware)
-);
-
 store.subscribe(() => {
   saveToLocalStorage(store.getState());
 });
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
