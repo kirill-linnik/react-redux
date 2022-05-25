@@ -1,11 +1,11 @@
 import { Button } from "antd";
 import React, { FC } from "react";
-import { RootState, useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../store";
 import { login, logout } from "../store/actions/userAction";
 
 const Main: FC = () => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state: RootState) => state.user);
+  const user = useAppSelector((state) => state.user);
 
   const onLoginClick = () => {
     dispatch(login());
