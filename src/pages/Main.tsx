@@ -1,14 +1,14 @@
 import { Button } from "antd";
 import React, { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
-import { login, logout } from "../store/actions/userAction";
+import { login2, logout } from "../store/actions/userAction";
 
 const Main: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
   const onLoginClick = () => {
-    dispatch(login());
+    dispatch(login2());
   };
 
   const onLogoutClick = () => {
