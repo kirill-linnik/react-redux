@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch } from "redux";
 import { UserAction, USER_LOGIN, USER_LOGOUT } from "../types/userTypes";
 
 function userLogin(): UserAction {
