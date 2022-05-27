@@ -1,11 +1,12 @@
-import { Button } from "antd";
-import React, { FC } from "react";
+import { Button, Modal } from "antd";
+import React, { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { login2, logout } from "../store/actions/userAction";
 
 const Main: FC = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const onLoginClick = () => {
     dispatch(login2());
@@ -17,9 +18,17 @@ const Main: FC = () => {
   return (
     <>
       <Button onClick={() => onLoginClick()}>Login</Button>{" "}
-      <Button onClick={() => onLogoutClick()}>Logout</Button>
+      <Button onClick={() => onLogoutClick()}>Logout</Button>{" "}
+      <Button onClick={() => setIsModalVisible(true)}>Open modal</Button>
       <br />
       login status: {user.isLoggedIn === true ? "in" : "out"}
+      <Modal
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        onOk={() => setIsModalVisible(false)}
+      >
+        test modal
+      </Modal>
     </>
   );
 };
