@@ -1,7 +1,9 @@
-import { Button, Modal } from "antd";
+import { Button, DatePicker, Modal } from "antd";
 import React, { FC, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
 import { login2, logout } from "../store/actions/userAction";
+
+const { RangePicker } = DatePicker;
 
 const Main: FC = () => {
   const dispatch = useAppDispatch();
@@ -22,6 +24,8 @@ const Main: FC = () => {
       <Button onClick={() => setIsModalVisible(true)}>Open modal</Button>
       <br />
       login status: {user.isLoggedIn === true ? "in" : "out"}
+      <br />
+      <RangePicker />
       <Modal
         visible={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
