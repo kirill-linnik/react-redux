@@ -2,11 +2,11 @@ import { Button, DatePicker, Form, Input, Modal } from "antd";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../store";
-import { login2, logout } from "../store/actions/userAction";
+import { login, logout } from "../store/actions/userAction";
 
 const { RangePicker } = DatePicker;
 
-const Main: FC = () => {
+const MainPage: FC = () => {
   const dispatch = useAppDispatch();
   const { t } = useTranslation();
   const user = useAppSelector((state) => state.user);
@@ -14,7 +14,7 @@ const Main: FC = () => {
   const [form] = Form.useForm();
 
   const onLoginClick = () => {
-    dispatch(login2());
+    dispatch(login());
   };
 
   const onLogoutClick = () => {
@@ -40,7 +40,7 @@ const Main: FC = () => {
       <br />
       <RangePicker />
       <Modal
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
         onOk={() => setIsModalVisible(false)}
       >
@@ -72,4 +72,4 @@ const Main: FC = () => {
   );
 };
 
-export default Main;
+export default MainPage;

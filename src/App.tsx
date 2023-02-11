@@ -2,7 +2,7 @@ import React, { FC, lazy } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-const MainPage = lazy(() => import("./pages/Main"));
+const MainPage = lazy(() => import("./pages/MainPage"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
 
 const App: FC = () => {
