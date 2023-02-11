@@ -1,9 +1,5 @@
-import {
-  UserAction,
-  UserState,
-  USER_LOGIN,
-  USER_LOGOUT,
-} from "../types/userTypes";
+import { UserAction, UserState, USER_LOGIN } from "../types/userTypes";
+import commonReducer from "./commonReducer";
 
 const initialState: UserState = {
   isLoggedIn: false,
@@ -15,16 +11,10 @@ const userReducer = (state = initialState, action: UserAction): UserState => {
       return {
         ...state,
         isLoggedIn: true,
-      };
-    case USER_LOGOUT:
-      return {
-        ...state,
-        isLoggedIn: false,
+        info: action.info,
       };
     default:
-      return {
-        ...state,
-      };
+      return commonReducer(state, initialState, action);
   }
 };
 

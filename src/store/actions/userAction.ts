@@ -5,9 +5,10 @@ import { UserAction, USER_LOGIN, USER_LOGOUT } from "../types/userTypes";
 
 type UserThunk = ThunkAction<void, RootState, unknown, UserAction>;
 
-function userLogin(): UserAction {
+function userLogin(info: string): UserAction {
   return {
     type: USER_LOGIN,
+    info,
   };
 }
 
@@ -18,12 +19,12 @@ function userLogout(): UserAction {
 }
 
 export const login2 = (): UserThunk => async (dispatch) => {
-  dispatch(userLogin());
+  dispatch(userLogin("Logged in via login2"));
 };
 
 export function login() {
   return async (dispatch: Dispatch<UserAction>) => {
-    dispatch(userLogin());
+    dispatch(userLogin("Logged in via login"));
   };
 }
 

@@ -1,6 +1,7 @@
 import { Button, DatePicker, Form, Input, Modal } from "antd";
 import { FC, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { InfoBlock } from "../components/InfoBlock";
 import { useAppDispatch, useAppSelector } from "../store";
 import { login, logout } from "../store/actions/userAction";
 
@@ -8,7 +9,7 @@ const { RangePicker } = DatePicker;
 
 const MainPage: FC = () => {
   const dispatch = useAppDispatch();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const user = useAppSelector((state) => state.user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -32,10 +33,27 @@ const MainPage: FC = () => {
 
   return (
     <>
+      <InfoBlock info={user.info} />
       <Button onClick={() => onLoginClick()}>Login</Button>{" "}
       <Button onClick={() => onLogoutClick()}>Logout</Button>{" "}
       <Button onClick={() => setIsModalVisible(true)}>Open modal</Button>
       <br />
+      <Button
+        onClick={() => {
+          i18n.changeLanguage("ET");
+        }}
+      >
+        Lang: ET
+      </Button>
+      /
+      <Button
+        onClick={() => {
+          i18n.changeLanguage("EN");
+        }}
+      >
+        Lang: EN
+      </Button>
+      : {t("welcome")} <br />
       login status: {user.isLoggedIn === true ? "in" : "out"}
       <br />
       <RangePicker />

@@ -15,7 +15,7 @@ const loadFromLocalStorage = (): RootState | undefined => {
     const stateStr = localStorage.getItem(LOCAL_STORAGE_LOCATION);
     return stateStr ? JSON.parse(stateStr) : undefined;
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return undefined;
   }
 };
@@ -23,7 +23,9 @@ const loadFromLocalStorage = (): RootState | undefined => {
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
-    let middleware = getDefaultMiddleware();
+    let middleware = getDefaultMiddleware({
+      serializableCheck: false, //as we are using Map, it seems to be not serializable, so we have to remove this check here
+    });
 
     if (process.env.NODE_ENV !== "production") {
       return middleware.concat(logger);
