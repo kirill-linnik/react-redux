@@ -56,7 +56,7 @@ const MainPage: FC = () => {
       : {t("welcome")} <br />
       login status: {user.isLoggedIn === true ? "in" : "out"}
       <br />
-      <RangePicker />
+      <RangePicker minuteStep={5} />
       <Modal
         open={isModalVisible}
         onCancel={() => setIsModalVisible(false)}
