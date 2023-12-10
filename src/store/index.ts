@@ -10,13 +10,13 @@ const rootReducer = combineReducers({
   user: userReducer,
 });
 
-const loadFromLocalStorage = (): RootState | undefined => {
+const loadFromLocalStorage = (): Partial<typeof rootReducer> => {
   try {
     const stateStr = localStorage.getItem(LOCAL_STORAGE_LOCATION);
-    return stateStr ? JSON.parse(stateStr) : undefined;
+    return stateStr ? JSON.parse(stateStr) : {};
   } catch (e) {
     console.error(e);
-    return undefined;
+    return {};
   }
 };
 
