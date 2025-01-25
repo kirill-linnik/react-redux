@@ -3,6 +3,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next } from "react-i18next";
 import en from "./locales/en/translation.json";
 import et from "./locales/et/translation.json";
+import { LanguageTypes } from "./models/LanguageTypes";
 
 const resources: Resource = {
   EN: {
@@ -25,8 +26,8 @@ i18n
     interpolation: {
       escapeValue: false,
     },
-    fallbackLng: ["ET"],
-    supportedLngs: ["ET", "EN"],
+    fallbackLng: LanguageTypes.ET,
+    supportedLngs: [LanguageTypes.ET, LanguageTypes.EN],
   });
 
 export default i18n;
